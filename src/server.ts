@@ -32,7 +32,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     let image_url = req.query.image_url;
 
     try {
-      let _ = new URL(image_url);
+      let url: URL = new URL(image_url);
     } catch (err) {
       res.status(400).send('Bad Input URL');
       return;
@@ -40,8 +40,10 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
 
     try {
-      const file_path = await filterImageFromURL(image_url);
-      res.status(200).sendFile(file_path, function(err) {
+      const file_path: string = await filterImageFromURL(image_url);
+
+      // Status set to 200
+      res.status(200).sendFile(file_path, (err) => {
         if (err) {
           res.status(500).send('Something went wrong');
         }
